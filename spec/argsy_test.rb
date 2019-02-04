@@ -1,9 +1,8 @@
-require "test/unit"
+require 'minitest/autorun'
 require_relative "../argsy"
-require_relative "test_helper"
  
 
-class TestOneCommand < Test::Unit::TestCase
+class TestOneCommand < Minitest::Test
 
   def test_no_options
     $actual = {}
@@ -16,7 +15,7 @@ class TestOneCommand < Test::Unit::TestCase
     end
     argsy.run! %w[list]
     assert_equal({}, $actual)
-    assert_raise OptionParser::InvalidOption do
+    assert_raises OptionParser::InvalidOption do
         argsy.run! %w[list -f -v]
     end
   end
@@ -36,7 +35,7 @@ class TestOneCommand < Test::Unit::TestCase
     end
     argsy.run! %w[list -x]
     assert_equal({detached: true}, $actual)
-    assert_raise OptionParser::MissingArgument do
+    assert_raises OptionParser::MissingArgument do
         argsy.run! %w[list -x -e]
     end
     argsy.run! %w[list -x -e txt]
@@ -52,14 +51,39 @@ class TestOneCommand < Test::Unit::TestCase
         c.options do |op|
           op.on("-x", "--hidden", "Show hidden files?") { |o| c.opts[:detached] = o }
           op.on("-e", "--ext EXTENSION", "List available files with extension") { |o| c.opts[:extension] = o }
+          op.on("-h") { puts op }
         end
       end
     end
-    output = capture_stdout do
+
+    assert_output "42\n" do
       argsy.run! %w[list -h]
     end
-    
-    assert_equal('ooo', output)
+  end
+
+  def test_generic_help
+    argsy = Argsy.new do |a|
+      a.command :list, "foo bar" do |c|
+        c.action { puts 42 }
+      end
+    end
+
+    assert_output 'tthhj', 'jj' do
+      argsy.run! %w[list -h]
+    end
   end
 
 end
+
+    # argsy = Argsy.new do |a|
+    #   a.command :list, "foo bar" do |c|
+    #     c.action { |opts| puts opts }
+    #     c.options do |op|
+    #       op.on('foo') { |o| c.opts[:foo] = o }
+    #       # op.on("-x", "--hidden", "Show hidden files?") { |o| c.opts[:detached] = o }
+    #       # op.on("-e", "--ext EXTENSION", "List available files with extension") { |o| c.opts[:extension] = o }
+    #     end
+    #   end
+    # end
+
+    # argsy.run! %w[list]
