@@ -8,6 +8,10 @@ class Argsy
   end
   def initialize() @commands = {}; yield self end
   def command(name, desc) c = Command.new(desc); @commands[name.to_s] = c; yield c end
-  def run!(a=ARGV) c = @commands[a[0]]; c.op.parse; c.do_it.call(c.opts) end
+  def run!(a=ARGV)
+    c = @commands[a[0]];
+    c.op.parse!(a);
+    c.do_it.call(c.opts)
+  end
   def help() puts "" end
 end
