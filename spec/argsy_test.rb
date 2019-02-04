@@ -1,9 +1,24 @@
 require_relative "../argsy"
 require "test/unit"
  
-class TestArgsy < Test::Unit::TestCase
+class TestOneCommand < Test::Unit::TestCase
 
-  def test_one_command
+  def test_no_options
+    actual = {}
+    argsy = Argsy.new do |a|
+      a.command :list, "foo bar" do |c|
+        c.action do |opts|
+          $actual = opts
+        end
+      end
+    end
+    argsy.run! %w[list]
+    assert_equal({}, actual)
+    argsy.run! %w[list -f -v]
+    assert_equal({}, actual)
+  end
+
+  def test_has_options
     actual = {}
     argsy = Argsy.new do |a|
       a.command :list, "foo bar" do |c|
