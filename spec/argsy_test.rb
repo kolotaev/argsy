@@ -16,8 +16,7 @@ class TestArgsy < Test::Unit::TestCase
         end
       end
     end
-    # ARGV = %w[list]
-    argsy.run!
+    argsy.run! %w[list]
     assert_equal({}, actual)
   end
 
