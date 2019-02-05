@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.summary = 'Tiny helper snippet for writing command line tools'
   spec.email = %w(ekolotaev@gmail.com)
   spec.homepage = 'https://github.com/kolotaev/argsy'
-  spec.license = 'MIT'
+  spec.license = 'The Unlicense'
   spec.name = 'argsy'
   spec.require_paths = [file]
   spec.required_ruby_version = '>= 1.9.3'
