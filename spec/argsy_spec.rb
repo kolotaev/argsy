@@ -4,9 +4,9 @@ class TestOneCommand2 < Minitest::Test
 
   def test_no_options
     $actual = {}
-    argsy = Argsy.new do |a|
-      a.command :list, 'foo bar' do |c|
-        c.action do |opts|
+    argsy = Argsy.new do
+      command :list, 'foo bar' do
+        action do |opts|
           $actual = opts
         end
       end
@@ -20,14 +20,14 @@ class TestOneCommand2 < Minitest::Test
 
   def test_has_options
     $actual = {}
-    argsy = Argsy.new do |a|
-      a.command :list, 'List all files' do |c|
-        c.action do |opts|
+    argsy = Argsy.new do
+      command :list, 'List all files' do
+        action do |opts|
           $actual = opts
         end
-        c.options do |op|
-          op.on('-x', '--hidden', 'Show hidden files?')
-          op.on('-e', '--extension EXTENSION', 'List available files with extension')
+        options do
+          on('-x', '--hidden', 'Show hidden files?')
+          on('-e', '--extension EXTENSION', 'List available files with extension')
         end
       end
     end

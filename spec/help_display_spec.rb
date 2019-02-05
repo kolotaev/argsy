@@ -3,9 +3,9 @@ require_relative 'test_helper'
 describe 'Argsy main help functionality' do
   describe 'shows help if' do
     let :argsy do
-      Argsy.new do |a|
-        a.command :list, 'List all files' do |c|
-          c.action { puts 42 }
+      Argsy.new do
+        command :list, 'List all files' do
+          action { puts 42 }
         end
       end
     end
@@ -60,15 +60,15 @@ EOX
 
   describe 'lists all commands available' do
     it 'no commands are listed' do
-      argsy = Argsy.new do |a|
-        a.command :list, 'List all files' do |c|
-          c.action { puts 42 }
+      argsy = Argsy.new do
+        command :list, 'List all files' do
+          action { puts 42 }
         end
-        a.command 'put', 'Put file' do |c|
-          c.action { puts 84 }
+        command 'put', 'Put file' do
+          action { puts 84 }
         end
-        a.command 'show-hidden', 'Display only hidden files' do |c|
-          c.action { puts 84 }
+        command 'show-hidden', 'Display only hidden files' do
+          action { puts 84 }
         end
       end
       stdout = <<-EOX
@@ -89,12 +89,12 @@ end
 describe 'Argsy commands help functionality' do
   describe 'shows help if' do
     it 'no help option specifed for command' do
-      argsy = Argsy.new do |a|
-        a.command :list, 'List all files' do |c|
-          c.action { puts 42 }
-          c.options do |op|
-            op.on('-i', '--hidden', 'Show hidden files?') { |o| c.opts[:detached] = o }
-            op.on('-e', '--ext EXTENSION', 'List available files with extension') { |o| c.opts[:extension] = o }
+      argsy = Argsy.new do
+        command :list, 'List all files' do
+          action { puts 42 }
+          options do
+            on('-i', '--hidden', 'Show hidden files?') { |o| opts[:detached] = o }
+            on('-e', '--ext EXTENSION', 'List available files with extension') { |o| opts[:extension] = o }
           end
         end
       end

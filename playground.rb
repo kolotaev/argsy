@@ -1,5 +1,4 @@
-require 'optparse'
-require_relative "./argsy"
+require_relative "lib/argsy"
 
 # opts = {}
 # OptionParser.new do |opts|
@@ -18,20 +17,21 @@ require_relative "./argsy"
 
 # puts opts
 
-argsy = Argsy.new '4.8.0' do |a|
-    a.command 'list-all', "List all files" do |c|
-        c.options do |op|
-            op.on("-x", "--hidden", "Show hidden files?")
-            op.on("-e", "--extension EXTENSION", "List available files with extension")
-        end
-        c.action { |o| puts o }
+Argsy.new do
+  command :post, 'Post all files' do
+    options do
+      on_tail("-x", "--extract", "Extract files?")
+      on("-e", "--extension EXTENSION", "List available files with extension")
     end
-    a.command :post, "Post data to twitter" do |c|
-        c.action do |opts|
-            $actual = opts
-        end
-        c.options do |op|
-            op.on("-d", "--data DATA", "All data")
-        end
-    end
+    action { |o| p 909; p o }
+  end
+    # a.command :post, "Post data to twitter" do |c|
+    #     c.action do |opts|
+    #         $actual = opts
+    #     end
+    #     c.options do
+    #         on("-d", "--data DATA", "All data")
+    #     end
+    # end
 end.run!
+
