@@ -1,13 +1,11 @@
-require_relative "../argsy"
-require 'minitest/autorun'
- 
+require_relative 'test_helper'
 
-class TestOneCommand < Minitest::Test
+class TestOneCommand2 < Minitest::Test
 
   def test_no_options
     $actual = {}
     argsy = Argsy.new do |a|
-      a.command :list, "foo bar" do |c|
+      a.command :list, 'foo bar' do |c|
         c.action do |opts|
           $actual = opts
         end
@@ -23,13 +21,13 @@ class TestOneCommand < Minitest::Test
   def test_has_options
     $actual = {}
     argsy = Argsy.new do |a|
-      a.command :list, "List all files" do |c|
+      a.command :list, 'List all files' do |c|
         c.action do |opts|
           $actual = opts
         end
         c.options do |op|
-          op.on("-x", "--hidden", "Show hidden files?")
-          op.on("-e", "--extension EXTENSION", "List available files with extension")
+          op.on('-x', '--hidden', 'Show hidden files?')
+          op.on('-e', '--extension EXTENSION', 'List available files with extension')
         end
       end
     end
@@ -44,14 +42,14 @@ class TestOneCommand < Minitest::Test
 
   def test_help_call
     argsy = Argsy.new do |a|
-      a.command :list, "foo bar" do |c|
+      a.command :list, 'foo bar' do |c|
         c.action do |opts|
           puts 42
         end
         c.options do |op|
-          op.on("-i", "--hidden", "Show hidden files?") { |o| c.opts[:detached] = o }
-          op.on("-e", "--ext EXTENSION", "List available files with extension") { |o| c.opts[:extension] = o }
-          # op.on("-h", "--help", "hjjjh") { puts op }
+          op.on('-i', '--hidden', 'Show hidden files?') { |o| c.opts[:detached] = o }
+          op.on('-e', '--ext EXTENSION', 'List available files with extension') { |o| c.opts[:extension] = o }
+          # op.on('-h', '--help', 'hjjjh') { puts op }
         end
       end
     end
@@ -69,27 +67,4 @@ EOX
       end
     end
   end
-
-  def test_help_generic
-    argsy = Argsy.new do |a|
-      a.command :list, "List all files" do |c|
-        c.action { puts 42 }
-      end
-    end
-    exp = <<-EOX
-Usage: rake_test_loader CMD [--help] [--version]
-    list                             List all files
-
-EOX
-    [%w[--help], %w[], %w[missing]].each do |i|
-      assert_output exp do
-        begin
-          argsy.run! i
-        rescue SystemExit => e
-          puts e.to_s.gsub(/exit\s*$/, '')
-        end
-      end
-    end
-  end
-
 end
