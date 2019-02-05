@@ -1,7 +1,7 @@
 require_relative 'test_helper'
 
-describe Argsy do
-  describe 'shows help if ' do
+describe 'Argsy main help functionality' do
+  describe 'shows help if' do
     let :argsy do
       Argsy.new do |a|
         a.command :list, 'List all files' do |c|
@@ -20,27 +20,27 @@ EOX
     end
     it 'zero commands are passed' do
       assert_output(*expected_out) do
-        with_soft_exit { argsy.run! %w[] }
+        with_captured_exit { argsy.run! %w[] }
       end
     end
     it 'unknown command is passed' do
       assert_output(*expected_out) do
-        with_soft_exit { argsy.run! %w[unknown] }
+        with_captured_exit { argsy.run! %w[unknown] }
       end
     end
     it 'several unknown command are passed' do
       assert_output(*expected_out) do
-        with_soft_exit { argsy.run! %w[unknown unknown2] }
+        with_captured_exit { argsy.run! %w[unknown unknown2] }
       end
     end
     it '--help option is passed' do
       assert_output(*expected_out) do
-        with_soft_exit { argsy.run! %w[--help] }
+        with_captured_exit { argsy.run! %w[--help] }
       end
     end
     it 'unknown option is passed' do
       assert_output(*expected_out) do
-        with_soft_exit { argsy.run! %w[--unknown] }
+        with_captured_exit { argsy.run! %w[--unknown] }
       end
     end
   end
@@ -53,12 +53,12 @@ Usage: rake_test_loader CMD [--help] [--version]
 
 EOX
       assert_output stdout, '' do
-        with_soft_exit { argsy.run! %w[--help] }
+        with_captured_exit { argsy.run! %w[--help] }
       end
     end
   end
 
-  describe 'lists all commands available ' do
+  describe 'lists all commands available' do
     it 'no commands are listed' do
       argsy = Argsy.new do |a|
         a.command :list, 'List all files' do |c|
@@ -79,7 +79,33 @@ Usage: rake_test_loader CMD [--help] [--version]
 
 EOX
       assert_output stdout, '' do
-        with_soft_exit { argsy.run! %w[--help] }
+        with_captured_exit { argsy.run! %w[--help] }
+      end
+    end
+  end
+end
+
+
+describe 'Argsy commands help functionality' do
+  describe 'shows help if' do
+    it 'no help option specifed for command' do
+      argsy = Argsy.new do |a|
+        a.command :list, 'List all files' do |c|
+          c.action { puts 42 }
+          c.options do |op|
+            op.on('-i', '--hidden', 'Show hidden files?') { |o| c.opts[:detached] = o }
+            op.on('-e', '--ext EXTENSION', 'List available files with extension') { |o| c.opts[:extension] = o }
+          end
+        end
+      end
+      stdout = <<-EOX
+Usage: rake_test_loader list [options] [--help]
+    -i, --hidden                     Show hidden files?
+    -e, --ext EXTENSION              List available files with extension
+
+EOX
+      assert_output stdout, '' do
+        with_captured_exit { argsy.run! %w[list --help] }
       end
     end
   end

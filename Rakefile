@@ -1,6 +1,9 @@
 require 'rake/testtask'
 
+task default: :test
+
 Rake::TestTask.new do |t|
-  t.test_files = FileList[ "spec/*_spec.rb"]
+  t.test_files = FileList[ "spec/**/*_spec.rb"]
   t.verbose = true
+  t.options = "-v -p"
 end

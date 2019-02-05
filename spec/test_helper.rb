@@ -1,8 +1,8 @@
 require "minitest/autorun"
 require "minitest/spec"
-require_relative "../argsy"
+require_relative "../lib/argsy"
 
-def with_soft_exit(&block)
+def with_captured_exit(&block)
   begin
     yield block
   rescue SystemExit => e
