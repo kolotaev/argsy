@@ -1,6 +1,7 @@
 require_relative 'test_helper'
 
-describe 'Argsy main help functionality' do
+describe 'Argsy help functionality' do
+  
   describe 'shows help if' do
     let :argsy do
       Argsy.new do
@@ -109,4 +110,5 @@ EOX
       end
     end
   end
+
 end

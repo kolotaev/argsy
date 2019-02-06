@@ -1,5 +1,6 @@
 require_relative "lib/argsy"
 
+# require 'optparse'
 # opts = {}
 # OptionParser.new do |opts|
 #     opts.banner = "Usage: example.rb [options]"
@@ -12,26 +13,31 @@ require_relative "lib/argsy"
 #     opts.on("-foo", "-foohjhgjhhjnhhghjgjhgghgfhgfhgfhgfg [IOIOIOI]", "Name to say hello to") do
 #         puts 12
 #     end
-# end.parse!(into: opts)
-
-
+# end.parse!
 # puts opts
 
-Argsy.new do
-  command :post, 'Post all files' do
-    options do
-      on_tail("-x", "--extract", "Extract files?")
-      on("-e", "--extension EXTENSION", "List available files with extension")
-    end
-    action { |o| p 909; p o }
+$actual = 0
+argsy = Argsy.new do
+  command :list, 'List all files' do
+    action { $actual = 88 }
+    options { on('-e', '--extension EXTENSION', 'List available files with extension') }
   end
-    # a.command :post, "Post data to twitter" do |c|
-    #     c.action do |opts|
-    #         $actual = opts
-    #     end
-    #     c.options do
-    #         on("-d", "--data DATA", "All data")
-    #     end
-    # end
+  command :post, 'Post to twitter' do
+    action { $actual = 99 }
+    options { on('-e', '--extension EXTENSION', 'List available files with extension') }
+  end
 end.run!
+puts $actual
 
+
+# require 'optparse'
+# opts = {}
+# OptionParser.new do |op|
+#     op.banner = "Usage: example.rb [options]"
+#     op.on('-a', '--all', 'Show all, even hidden files?') 
+#     op.on('-e', '--extension EXTENSION', 'List available files with extension') { |o| opts[:custom_all] = 'my val' }
+#     op.on("-foo", "--foo [IOIOIOI]", "Name to say hello to") do
+#         puts 12
+#     end
+# end.parse!(into: opts)
+# puts opts
