@@ -63,7 +63,7 @@ describe 'Argsy options functionality' do
     end
   end
 
-  it 'raises error when required option argument is missing and does not rnu action' do
+  it 'raises error when required option argument is missing and does not run action' do
     $actual = 0
     argsy = Argsy.new do
       command :list, 'List all files' do

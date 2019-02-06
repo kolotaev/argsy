@@ -15,6 +15,8 @@ def with_silent_exit(&block)
   $stdout = StringIO.new
   begin
     yield block
+  rescue SystemExit
+    # noop
   ensure
     $stdout = stdout_orig
   end
