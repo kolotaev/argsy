@@ -10,7 +10,7 @@ external dependencies.
 
 As you already know, Ruby is awesome for scripting and any sort of CLI tools: it gives you a superb OS commands 
 interaction interface, JSON/YAML parsing, HTTP tools, etc... All out of the box! But built-in `OptionParser` doesn't
-provide easy-to-write functionality to create CLIs like `./tool command --option 1 -i`. The problem here is: how to
+provide easy-to-write functionality to create CLIs like `./script command --option 1`. The problem here is: how to
 declare command, action and options conveniently?
 
 > Sometimes, for any imaginable reason, you do not want you script to be dependent on external gems (say, you want to
@@ -21,13 +21,13 @@ declare command, action and options conveniently?
 so you can just copy-paste it inside your script and have a nice 
 tiny DSL. You can of course use it as a gem as well, if you want to.
 
-**Disclaimer**: `Argsy` doesn't claim itself as a profound CLI DSL like `Thor` and others, 
+**Disclaimer**: `Argsy` doesn't claim itself as a profound CLI DSL like `Thor` and the company, 
 thus for complex scripts, please, opt for those gems instead.
 
 ## Usage
 
 ```ruby
-Argsy.new do
+Argsy.new '1.0.0' do
   command :list, 'List all files' do
     action do |o|
       puts %w(. .. .hidden.py).join("\n") if o[:all]
@@ -71,16 +71,41 @@ Argsy.new do
 end.run
 ```
 
+In console:
+```
+$ ./example
+Usage: playground CMD [--help] [--version]
+    list                             List all files
+    print                            Print all given options
+    hello                            Greet the World without options
+    post                             
+
+$ ./example post --help
+Usage: playground post [options] [--help]
+    -f, --facebook
+    -t, --twitter
+    -d, --date=DATE                  Date when message was posted
+
+$ ./example post -f -d 12-8-2016
+I'm a command without description
+Posting to facebook: Oh, Hi Mark
+Date and time posted: 2016-08-12 00:00:00 +0300
+
+
+$ ./example post --version
+example version 1.0.0
+```
+
 ## FAQ
 
 | Q:       | A:          |
 | ------------- |-------------|
 | Does it support groups/subcommands?      | Only in a way of declaring commands as `'group:subcommand'`      |
 | What can I do inside options block?      | Anything that is possible inside a stdlib's `OptionParser`      |
-| Why not Thor, Commander, etc.?     | See rationale. |
-| Can I use it as a gem?    | Yes. `gem install argsy`. |
-| Why does it look like a minified jQuery?      | Yes, it's not idiomatic Ruby formatting, I wanted to make it terse, still readable |
-| Copy-pasting is bad. It's not DRY!      | Absolutely agree with you. |
+| Why not Thor, Commander, etc.?     | See rationale |
+| Can I use it as a gem?    | Yes. `gem install argsy` |
+| Why does it look like a minified jQuery?      | Yes, it's not an idiomatic Ruby formatting. I wanted to make it terse, still readable |
+| Copy-pasting is bad. It's not DRY!      | Absolutely agree with you |
 
 ## License
 The Unlicense
