@@ -9,7 +9,7 @@ rake_test_loader version 0.0.1
 
 EOX
     assert_output stdout, '' do
-      with_captured_exit { argsy.run! %w[--version] }
+      with_captured_exit { argsy.run %w[--version] }
     end
   end
 
@@ -21,7 +21,7 @@ rake_test_loader version 5.5.9.patch
 
 EOX
     assert_output stdout, '' do
-      with_captured_exit { argsy.run! %w[--version] }
+      with_captured_exit { argsy.run %w[--version] }
     end
   end
 
@@ -39,7 +39,7 @@ rake_test_loader 999 (beta)
 
 EOX
     assert_output stdout, '' do
-      with_captured_exit { argsy.run! %w[list --version] }
+      with_captured_exit { argsy.run %w[list --version] }
     end
   end
 

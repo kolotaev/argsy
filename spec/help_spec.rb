@@ -21,27 +21,27 @@ EOX
     end
     it 'zero commands are passed' do
       assert_output(*expected_out) do
-        with_captured_exit { argsy.run! %w[] }
+        with_captured_exit { argsy.run %w[] }
       end
     end
     it 'unknown command is passed' do
       assert_output(*expected_out) do
-        with_captured_exit { argsy.run! %w[unknown] }
+        with_captured_exit { argsy.run %w[unknown] }
       end
     end
     it 'several unknown command are passed' do
       assert_output(*expected_out) do
-        with_captured_exit { argsy.run! %w[unknown unknown2] }
+        with_captured_exit { argsy.run %w[unknown unknown2] }
       end
     end
     it '--help option is passed' do
       assert_output(*expected_out) do
-        with_captured_exit { argsy.run! %w[--help] }
+        with_captured_exit { argsy.run %w[--help] }
       end
     end
     it 'unknown option is passed' do
       assert_output(*expected_out) do
-        with_captured_exit { argsy.run! %w[--unknown] }
+        with_captured_exit { argsy.run %w[--unknown] }
       end
     end
   end
@@ -54,7 +54,7 @@ Usage: rake_test_loader CMD [--help] [--version]
 
 EOX
       assert_output stdout, '' do
-        with_captured_exit { argsy.run! %w[--help] }
+        with_captured_exit { argsy.run %w[--help] }
       end
     end
   end
@@ -80,7 +80,7 @@ Usage: rake_test_loader CMD [--help] [--version]
 
 EOX
       assert_output stdout, '' do
-        with_captured_exit { argsy.run! %w[--help] }
+        with_captured_exit { argsy.run %w[--help] }
       end
     end
   end
@@ -106,7 +106,7 @@ Usage: rake_test_loader list [options] [--help]
 
 EOX
       assert_output stdout, '' do
-        with_captured_exit { argsy.run! %w[list --help] }
+        with_captured_exit { argsy.run %w[list --help] }
       end
     end
   end

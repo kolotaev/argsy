@@ -10,7 +10,7 @@ describe 'Argsy options functionality' do
       end
     end
     assert_raises OptionParser::InvalidOption do
-      argsy.run! %w[list -f -v]
+      argsy.run %w[list -f -v]
     end
     assert_equal(0, $actual)
   end
@@ -22,7 +22,7 @@ describe 'Argsy options functionality' do
         action { $actual = 90 }
       end
     end
-    argsy.run! %w[list]
+    argsy.run %w[list]
     assert_equal(90, $actual)
   end
 
@@ -42,23 +42,23 @@ describe 'Argsy options functionality' do
       end
     end
     it 'when no options given' do
-      argsy.run! %w[list]
+      argsy.run %w[list]
       assert_equal({}, $actual)
     end
     it 'when one option given' do
-      argsy.run! %w[list -a]
+      argsy.run %w[list -a]
       assert_equal({all: true}, $actual)
     end
     it 'when one option with argument given' do
-      argsy.run! %w[list -e rb]
+      argsy.run %w[list -e rb]
       assert_equal({extension: 'rb'}, $actual)
     end
     it 'when all options given' do
-      argsy.run! %w[list -a -e txt]
+      argsy.run %w[list -a -e txt]
       assert_equal({all: true, extension: 'txt'}, $actual)
     end
     it 'when all fully-qualified options given' do
-      argsy.run! %w[list --all --extension py]
+      argsy.run %w[list --all --extension py]
       assert_equal({all: true, extension: 'py'}, $actual)
     end
   end
@@ -77,7 +77,7 @@ describe 'Argsy options functionality' do
       end
     end
     assert_raises OptionParser::MissingArgument do
-      argsy.run! %w[list -a -e]
+      argsy.run %w[list -a -e]
     end
     assert_equal(0, $actual)
   end
@@ -95,7 +95,7 @@ describe 'Argsy options functionality' do
         end
       end
     end
-    argsy.run! %w[list -a]
+    argsy.run %w[list -a]
     assert_equal({:custom_all=>"my val", :all=>true}, $actual)
   end
 

@@ -6,8 +6,8 @@ rvm:
   - 2.5.3
   - 2.6.1
   - ruby-head
-# before_install:
-  # - gem install rake minitest
+before_install:
+  - gem install rake minitest # needed for ruby-head
 matrix:
   allow_failures:
     - rvm: ruby-head
