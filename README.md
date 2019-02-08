@@ -49,8 +49,12 @@ Argsy.new '1.0.0' do
     end
   end
   
-  command 'hello:world', 'Greet the World group without options' do
+  command 'world:hello', 'Greet the World group without options' do
     action { puts 'Hello world!' }
+  end
+  
+  command 'world:bye', 'Say goodbye to the World group without options' do
+    action { puts 'World, I bid you farewell!' }
   end
   
   command :post do |c|
@@ -75,14 +79,15 @@ end.run
 In console:
 ```
 $ ./example
-Usage: playground CMD [--help] [--version]
+Usage: example CMD [--help] [--version]
     list                             List all files
     print                            Print all given options
-    hello                            Greet the World without options
+    world:hello                      Greet the World group without options
+    world:bye                        Say goodbye to the World group without options
     post                             
 
 $ ./example post --help
-Usage: playground post [options] [--help]
+Usage: example post [options] [--help]
     -f, --facebook
     -t, --twitter
     -d, --date=DATE                  Date when message was posted
@@ -92,8 +97,7 @@ I'm a command without description
 Posting to facebook: Oh, Hi Mark
 Date and time posted: 2016-08-12 00:00:00 +0300
 
-
-$ ./example post --version
+$ ./example --version
 example version 1.0.0
 ```
 
